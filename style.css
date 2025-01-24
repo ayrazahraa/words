@@ -37,6 +37,7 @@ h1 {
   gap: 5px;
   justify-content: center;
   margin: 20px auto;
+  position: relative;
 }
 
 .grid-container button {
@@ -79,4 +80,12 @@ h1 {
 .word-list-container li.found {
   background-color: #4CAF50;
   color: white;
+}
+
+.line {
+  position: absolute;
+  background-color: #4CAF50;
+  z-index: 1;
+  transform-origin: left center;
+  height: 5px;
 }
