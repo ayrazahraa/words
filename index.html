@@ -9,8 +9,12 @@
 <body>
   <div class="game-container">
     <h1>Word Search Game</h1>
+    <div class="mode-selection">
+      <button id="regularModeButton">Regular Mode</button>
+      <button id="timeModeButton">Time Mode</button>
+    </div>
     <div class="info-panel">
-      <div id="timer">Time Left: <span id="time">60</span>s</div>
+      <div id="timer" style="display: none;">Time Left: <span id="time">60</span>s</div>
       <div id="score">Score: <span id="scoreCount">0</span></div>
     </div>
     <div class="grid-container" id="grid"></div>
@@ -18,7 +22,7 @@
       <h3>Find These Words:</h3>
       <ul id="wordList"></ul>
     </div>
-    <button id="startButton">Start Game</button>
+    <button id="startButton" style="display: none;">Start Game</button>
   </div>
   <script src="script.js"></script>
 </body>
