@@ -5,23 +5,40 @@ let selectedCells = [];
 let foundWords = [];
 let score = 0;
 let timer = 60;
+let timerInterval;
+let isTimeMode = false;
 
 // DOM Elements
 const gridContainer = document.getElementById("grid");
 const wordList = document.getElementById("wordList");
 const timerElement = document.getElementById("time");
+const timerDiv = document.getElementById("timer");
 const scoreElement = document.getElementById("scoreCount");
 const startButton = document.getElementById("startButton");
+const regularModeButton = document.getElementById("regularModeButton");
+const timeModeButton = document.getElementById("timeModeButton");
+
+// Mode Selection
+regularModeButton.addEventListener("click", () => {
+  isTimeMode = false;
+  startGame();
+});
+timeModeButton.addEventListener("click", () => {
+  isTimeMode = true;
+  startGame();
+});
 
 // Start the game
-startButton.addEventListener("click", startGame);
-
 function startGame() {
   resetGame();
   generateGrid();
   placeWords();
   displayWordList();
-  startTimer();
+
+  // Show/hide timer based on mode
+  timerDiv.style.display = isTimeMode ? "block" : "none";
+
+  if (isTimeMode) startTimer();
 }
 
 // Reset game state
@@ -34,7 +51,7 @@ function resetGame() {
   gridContainer.innerHTML = "";
   wordList.innerHTML = "";
   scoreElement.textContent = score;
-  timerElement.textContent = timer;
+  clearInterval(timerInterval);
 }
 
 // Generate a random letter grid
@@ -58,9 +75,11 @@ function renderGrid() {
       button.textContent = letter;
       button.dataset.row = rowIndex;
       button.dataset.col = colIndex;
+
       button.addEventListener("mousedown", handleCellSelect);
       button.addEventListener("mouseenter", handleCellHover);
       button.addEventListener("mouseup", checkSelection);
+
       gridContainer.appendChild(button);
     });
   });
@@ -138,12 +157,12 @@ function updateUI(word) {
 
 // Timer logic
 function startTimer() {
-  const interval = setInterval(() => {
+  timerInterval = setInterval(() => {
     timer--;
     timerElement.textContent = timer;
 
     if (timer <= 0) {
-      clearInterval(interval);
+      clearInterval(timerInterval);
       alert("Time's up! Game Over.");
     }
   }, 1000);
