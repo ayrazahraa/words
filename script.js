@@ -1,32 +1,18 @@
-const words = ["CAT", "DOG", "BIRD", "FISH", "COW", "LION", "FROG"];
-const gridSize = 10;
+const words = ["CAT", "DOG", "BIRD", "FISH", "COW", "LION", "FROG", "FOX"];
+const gridSize = 8; // Fixed 8x8 grid
 let grid = [];
 let selectedCells = [];
 let foundWords = [];
 let score = 0;
-let timer = 60;
-let timerInterval;
-let isTimeMode = false;
 
 // DOM Elements
 const gridContainer = document.getElementById("grid");
 const wordList = document.getElementById("wordList");
-const timerElement = document.getElementById("time");
-const timerDiv = document.getElementById("timer");
 const scoreElement = document.getElementById("scoreCount");
 const startButton = document.getElementById("startButton");
-const regularModeButton = document.getElementById("regularModeButton");
-const timeModeButton = document.getElementById("timeModeButton");
 
-// Mode Selection
-regularModeButton.addEventListener("click", () => {
-  isTimeMode = false;
-  startGame();
-});
-timeModeButton.addEventListener("click", () => {
-  isTimeMode = true;
-  startGame();
-});
+// Start Game Button
+startButton.addEventListener("click", startGame);
 
 // Start the game
 function startGame() {
@@ -34,11 +20,6 @@ function startGame() {
   generateGrid();
   placeWords();
   displayWordList();
-
-  // Show/hide timer based on mode
-  timerDiv.style.display = isTimeMode ? "block" : "none";
-
-  if (isTimeMode) startTimer();
 }
 
 // Reset game state
@@ -46,12 +27,10 @@ function resetGame() {
   grid = [];
   foundWords = [];
   score = 0;
-  timer = 60;
   selectedCells = [];
   gridContainer.innerHTML = "";
   wordList.innerHTML = "";
   scoreElement.textContent = score;
-  clearInterval(timerInterval);
 }
 
 // Generate a random letter grid
@@ -153,17 +132,4 @@ function updateUI(word) {
 
   selectedCells.forEach((cell) => cell.classList.add("found"));
   scoreElement.textContent = score;
-}
-
-// Timer logic
-function startTimer() {
-  timerInterval = setInterval(() => {
-    timer--;
-    timerElement.textContent = timer;
-
-    if (timer <= 0) {
-      clearInterval(timerInterval);
-      alert("Time's up! Game Over.");
-    }
-  }, 1000);
 }
