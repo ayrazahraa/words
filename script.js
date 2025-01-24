@@ -115,11 +115,35 @@ function checkSelection() {
   if (words.includes(selectedWord) && !foundWords.includes(selectedWord)) {
     foundWords.push(selectedWord);
     score += 10;
+    drawLine(selectedCells);
     updateUI(selectedWord);
   }
 
   selectedCells.forEach((cell) => cell.classList.remove("selected"));
   selectedCells = [];
+}
+
+// Draw a line connecting the selected cells
+function drawLine(cells) {
+  const firstCell = cells[0];
+  const lastCell = cells[cells.length - 1];
+  const line = document.createElement("div");
+  const startX = firstCell.offsetLeft + firstCell.offsetWidth / 2;
+  const startY = firstCell.offsetTop + firstCell.offsetHeight / 2;
+  const endX = lastCell.offsetLeft + lastCell.offsetWidth / 2;
+  const endY = lastCell.offsetTop + lastCell.offsetHeight / 2;
+  const angle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI);
+  const length = Math.sqrt(
+    Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2)
+  );
+
+  line.classList.add("line");
+  line.style.width = `${length}px`;
+  line.style.transform = `rotate(${angle}deg)`;
+  line.style.left = `${startX}px`;
+  line.style.top = `${startY}px`;
+
+  gridContainer.appendChild(line);
 }
 
 // Update UI for found words
